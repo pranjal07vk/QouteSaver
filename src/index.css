@@ -1,5 +1,110 @@
-/* index.css */
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #fce4ec, #fff9c4);
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: #444;
+  margin-top: 20px;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #ffffffcc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.input-box button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  background: #90caf9;
+  color: white;
+  cursor: pointer;
+}
+
+.input-box button:hover {
+  background: #64b5f6;
+}
+
+.quote-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.quote-card {
+  background: #ffffffcc;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quote-card span {
+  font-size: 16px;
+  color: #333;
+}
+
+.quote-card button {
+  margin-right: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Edit button */
+.quote-card button:nth-child(2) {
+  background: #f8bbd0;
+}
+
+/* Delete button */
+.quote-card button:nth-child(3) {
+  background: #ffccbc;
+}
+
+.quote-card input {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #fff;
+}
+
+.category-panel {
+  background: #ffffffee;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.category-panel button {
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }

@@ -8,12 +8,21 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const defaultCategories = [
+    { name: "motivation", color: "#90caf9" }, // blue
+    { name: "love", color: "#f48fb1" },       // red/pink
+    { name: "study", color: "#fff59d" },      // yellow
+  ];
+
   // ADD
-  const addQuote = (text) => {
+  const addQuote = (text, categoryData) => {
     const newQuote = {
       id: Date.now(),
       text,
+      category: categoryData.name,
+      color: categoryData.color,
     };
+
     setQuotes([...quotes, newQuote]);
   };
 
@@ -36,7 +45,7 @@ function App() {
   }, [quotes]);
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Quote Saver</h1>
 
       <QuoteInput addQuote={addQuote} />
@@ -47,7 +56,7 @@ function App() {
         editQuote={editQuote}
       />
     </div>
-  );
+);
 }
 
 export default App;

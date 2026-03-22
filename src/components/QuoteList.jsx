@@ -2,7 +2,7 @@ import QuoteItem from "./QuoteItem";
 
 function QuoteList({ quotes, deleteQuote, editQuote }) {
   return (
-    <div>
+    <div className="quote-list">
       {quotes.map((q) => (
         <QuoteItem
           key={q.id}

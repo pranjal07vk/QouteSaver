@@ -11,7 +11,10 @@ function QuoteItem({ quote, deleteQuote, editQuote }) {
   };
 
   return (
-    <div>
+    <div 
+        className="quote-card"
+        style={{ backgroundColor: quote.color }}
+    >
       {isEditing ? (
         <>
           <input
@@ -27,6 +30,8 @@ function QuoteItem({ quote, deleteQuote, editQuote }) {
           <button onClick={() => deleteQuote(quote.id)}>Delete</button>
         </>
       )}
+
+      <small>{quote.category}</small>
     </div>
   );
 }
