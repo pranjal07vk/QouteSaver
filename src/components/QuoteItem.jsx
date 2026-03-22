@@ -3,6 +3,10 @@ import { useState } from "react";
 function QuoteItem({ quote, deleteQuote, editQuote }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(quote.text);
+  
+  const formatDate = (timestamp) => {
+    return new Date(timestamp).toLocaleString();
+  };
 
   const handleSave = () => {
     if (!newText.trim()) return;
@@ -32,6 +36,10 @@ function QuoteItem({ quote, deleteQuote, editQuote }) {
       )}
 
       <small>{quote.category}</small>
+
+      <small>
+        Created: {formatDate(quote.updatedAt)}
+      </small>
     </div>
   );
 }

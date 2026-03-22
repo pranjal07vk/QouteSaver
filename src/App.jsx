@@ -16,11 +16,15 @@ function App() {
 
   // ADD
   const addQuote = (text, categoryData) => {
+    const now = Date.now();
+
     const newQuote = {
-      id: Date.now(),
+      id: now,
       text,
       category: categoryData.name,
       color: categoryData.color,
+      createdAt: now,
+      updatedAt: now,
     };
 
     setQuotes([...quotes, newQuote]);
@@ -34,10 +38,15 @@ function App() {
 
   // EDIT
   const editQuote = (id, newText) => {
-    const updated = quotes.map((q) =>
-      q.id === id ? { ...q, text: newText } : q
+    const now = Date.now();
+
+    setQuotes(
+      quotes.map((q) =>
+        q.id === id
+        ? { ...q, text: newText, updatedAt: now }
+        : q
+      )
     );
-    setQuotes(updated);
   };
 
   useEffect(() => {
