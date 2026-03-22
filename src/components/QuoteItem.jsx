@@ -1,8 +1,18 @@
 import { useState } from "react";
 
-function QuoteItem({ quote, deleteQuote, editQuote }) {
+function QuoteItem({ quote, deleteQuote, editQuote, toggleFavorite }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(quote.text);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(quote.text);
+    setCopied(true);
+
+    setTimeout(() => {
+        setCopied(false);
+    }, 1500);
+  };
   
   const formatDate = (timestamp) => {
     return new Date(timestamp).toLocaleString();
@@ -19,6 +29,13 @@ function QuoteItem({ quote, deleteQuote, editQuote }) {
         className="quote-card"
         style={{ backgroundColor: quote.color }}
     >
+
+      <div className="top-bar">
+        <button onClick={() => toggleFavorite(quote.id)}>
+            {quote.isFavorite ? "⭐" : "☆"}
+        </button>
+      </div>
+
       {isEditing ? (
         <>
           <input
@@ -32,6 +49,10 @@ function QuoteItem({ quote, deleteQuote, editQuote }) {
           <span>{quote.text}</span>
           <button onClick={() => setIsEditing(true)}>Edit</button>
           <button onClick={() => deleteQuote(quote.id)}>Delete</button>
+          
+          <button onClick={handleCopy}>
+            {copied ? "Copied!" : "Copy"}
+          </button>
         </>
       )}
 

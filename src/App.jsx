@@ -14,6 +14,16 @@ function App() {
     { name: "study", color: "#fff59d" },      // yellow
   ];
 
+  const toggleFavorite = (id) => {
+    setQuotes(
+      quotes.map((q) =>
+        q.id === id
+        ? { ...q, isFavorite: !q.isFavorite }
+        : q
+      )
+    );
+  };
+
   // ADD
   const addQuote = (text, categoryData) => {
     const now = Date.now();
@@ -25,6 +35,7 @@ function App() {
       color: categoryData.color,
       createdAt: now,
       updatedAt: now,
+      isFavorite: false, // 👈 important
     };
 
     setQuotes([...quotes, newQuote]);
@@ -63,9 +74,10 @@ function App() {
         quotes={quotes}
         deleteQuote={deleteQuote}
         editQuote={editQuote}
+        toggleFavorite={toggleFavorite}
       />
     </div>
-);
+  );
 }
 
 export default App;
