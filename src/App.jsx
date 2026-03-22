@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuoteInput from "./components/QuoteInput";
 import QuoteList from "./components/QuoteList";
 

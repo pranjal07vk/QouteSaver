@@ -16,7 +16,12 @@ function QuoteInput({ addQuote }) {
         placeholder="Enter quote..."
         value={text}
         onChange={(e) => setText(e.target.value)}
-      />
+        onKeyDown={(e) => {
+            if (e.key === "Enter") {
+                handleAdd();
+            }
+        }}
+     />
       <button onClick={handleAdd}>Add</button>
     </div>
   );
