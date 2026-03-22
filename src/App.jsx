@@ -3,7 +3,10 @@ import QuoteInput from "./components/QuoteInput";
 import QuoteList from "./components/QuoteList";
 
 function App() {
-  const [quotes, setQuotes] = useState([]);
+  const [quotes, setQuotes] = useState(() => {
+    const saved = localStorage.getItem("quotes");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   // ADD
   const addQuote = (text) => {
@@ -27,6 +30,10 @@ function App() {
     );
     setQuotes(updated);
   };
+
+  useEffect(() => {
+    localStorage.setItem("quotes", JSON.stringify(quotes));
+  }, [quotes]);
 
   return (
     <div>
