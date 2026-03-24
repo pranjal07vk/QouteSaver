@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
 import QuoteInput from "./components/QuoteInput";
 import QuoteList from "./components/QuoteList";
+import ProfilePanel from "./components/ProfilePanel";
 
 function App() {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || ""
+  );
+
+  const [showFavorites, setShowFavorites] = useState(false);
+  
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
+
   const [quotes, setQuotes] = useState(() => {
     const saved = localStorage.getItem("quotes");
     return saved ? JSON.parse(saved) : [];
   });
-
-  const defaultCategories = [
-    { name: "motivation", color: "#90caf9" }, // blue
-    { name: "love", color: "#f48fb1" },       // red/pink
-    { name: "study", color: "#fff59d" },      // yellow
-  ];
 
   const toggleFavorite = (id) => {
     setQuotes(
@@ -23,6 +31,10 @@ function App() {
       )
     );
   };
+
+  const displayedQuotes = showFavorites
+    ? quotes.filter((q) => q.isFavorite)
+    : quotes;
 
   // ADD
   const addQuote = (text, categoryData) => {
@@ -64,17 +76,57 @@ function App() {
     localStorage.setItem("quotes", JSON.stringify(quotes));
   }, [quotes]);
 
+  useEffect(() => {
+    localStorage.setItem("username", username);
+  }, [username]);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".profile-panel") && !e.target.closest(".top-nav")) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="app-container">
+    <div className={darkMode ? "app dark" : "app"}>
+      <div className="top-nav">
+        <button onClick={() => setIsProfileOpen(!isProfileOpen)}>
+          👤
+        </button>
+      </div>
+
+      <ProfilePanel
+        isOpen={isProfileOpen}
+        setIsOpen={setIsProfileOpen}
+        username={username}
+        setUsername={setUsername}
+        showFavorites={showFavorites}
+        setShowFavorites={setShowFavorites}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
+
       <h1>Quote Saver</h1>
 
       <QuoteInput addQuote={addQuote} />
 
       <QuoteList
-        quotes={quotes}
+        quotes={displayedQuotes}
         deleteQuote={deleteQuote}
         editQuote={editQuote}
         toggleFavorite={toggleFavorite}
+        darkMode={darkMode}
       />
     </div>
   );

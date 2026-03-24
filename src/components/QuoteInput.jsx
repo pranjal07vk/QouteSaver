@@ -1,10 +1,34 @@
 import { useState } from "react";
+import axios from "axios";
 
 function QuoteInput({ addQuote }) {
   const [text, setText] = useState("");
   const [showCategories, setShowCategories] = useState(false);
   const [customCategory, setCustomCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isListening, setIsListening] = useState(false);
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const recognition = new SpeechRecognition();
+
+  recognition.continuous = false;
+  recognition.lang = "en-US";
+
+  const startListening = () => {
+    setIsListening(true);
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const text = event.results[0][0].transcript;
+      setText((prev) => prev + " " + text);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+  };
 
   const handleAdd = () => {
     if (!text.trim() || !selectedCategory) return;
@@ -77,6 +101,10 @@ function QuoteInput({ addQuote }) {
             </div>
         </div>
       )}
+
+      <button onClick={startListening}>
+        {isListening ? "🎤 Listening..." : "🎤 Speak"}
+      </button>
 
       <button onClick={handleAdd}>Add</button>
     </div>

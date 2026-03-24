@@ -59,7 +59,7 @@ h1 {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .quote-card span {
@@ -68,11 +68,11 @@ h1 {
 }
 
 .quote-card button {
-  margin-right: 8px;
-  padding: 6px 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
+  width: auto;
 }
 
 /* Edit button */
@@ -129,4 +129,109 @@ h1 {
   border: none;
   font-size: 18px;
   cursor: pointer;
+}
+
+/* DARK MODE */
+.dark {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e2e8f0;
+}
+
+.dark body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+}
+
+.profile-panel {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  width: 240px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #ffffffee;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile-panel input {
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f5f9;
+}
+
+.panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logout-btn {
+  background: #ffccbc;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dark .profile-panel {
+  background: #020617;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.dark .profile-panel input {
+  background: #1e293b;
+  color: white;
+}
+
+/* ROOT APP */
+.app {
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* INPUT */
+.dark input {
+  background: #1e293b;
+  color: white;
+  border: none;
+}
+
+/* BUTTONS */
+.dark button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #e2e8f0;
 }

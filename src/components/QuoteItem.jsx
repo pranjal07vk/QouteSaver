@@ -1,9 +1,22 @@
 import { useState } from "react";
 
-function QuoteItem({ quote, deleteQuote, editQuote, toggleFavorite }) {
+function QuoteItem({ quote, deleteQuote, editQuote, toggleFavorite, darkMode }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(quote.text);
   const [copied, setCopied] = useState(false);
+
+  const getNeonColor = (category) => {
+    switch (category) {
+        case "motivation":
+            return "#00e5ff"; // neon blue
+        case "love":
+            return "#ff4081"; // neon pink
+        case "study":
+            return "#ffee58"; // neon yellow
+        default:
+            return "#69f0ae"; // neon green
+    }
+  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(quote.text);
@@ -25,9 +38,17 @@ function QuoteItem({ quote, deleteQuote, editQuote, toggleFavorite }) {
   };
 
   return (
-    <div 
+    <div
         className="quote-card"
-        style={{ backgroundColor: quote.color }}
+        style={{
+            backgroundColor: darkMode ? "#020617cc" : quote.color,
+            borderLeft: `5px solid ${
+                darkMode ? getNeonColor(quote.category) : quote.color
+            }`,
+            boxShadow: darkMode
+                ? `0 0 10px ${getNeonColor(quote.category)}`
+                : "0 4px 10px rgba(0,0,0,0.1)"
+        }}
     >
 
       <div className="top-bar">
