@@ -5,10 +5,24 @@ body {
   min-height: 100vh;
 }
 
+/* LIGHT MODE */
+body:not(.dark-body) {
+  background: linear-gradient(135deg, #e0f7fa, #fce4ec, #fff9c4);
+}
+
+/* DARK MODE */
+.dark-body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+}
+
 h1 {
   text-align: center;
   color: #444;
   margin-top: 20px;
+}
+
+.dark h1 {
+  color: #e2e8f0;
 }
 
 .app-container {
@@ -137,16 +151,6 @@ h1 {
   cursor: pointer;
 }
 
-/* DARK MODE */
-.dark {
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color: #e2e8f0;
-}
-
-.dark body {
-  background: radial-gradient(circle at top, #0f172a, #020617);
-}
-
 .profile-panel {
   position: fixed;
   top: 70px;
@@ -222,10 +226,11 @@ h1 {
 /* ROOT APP */
 .app {
   min-height: 100vh;
-  transition: all 0.3s ease;
   max-width: 1000px;
   margin: auto;
   padding: 20px;
+
+  background: transparent; /* important */
 }
 
 /* INPUT */

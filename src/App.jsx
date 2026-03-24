@@ -73,6 +73,14 @@ function App() {
   };
 
   useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-body");
+    } else {
+      document.body.classList.remove("dark-body");
+    }
+  }, [darkMode]);
+
+  useEffect(() => {
     localStorage.setItem("quotes", JSON.stringify(quotes));
   }, [quotes]);
 
