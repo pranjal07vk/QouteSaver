@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 
 function QuoteInput({ addQuote }) {
   const [text, setText] = useState("");
@@ -8,15 +7,22 @@ function QuoteInput({ addQuote }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isListening, setIsListening] = useState(false);
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  const recognition = new SpeechRecognition();
-
-  recognition.continuous = false;
-  recognition.lang = "en-US";
+  
 
   const startListening = () => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Speech recognition not supported");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.continuous = false;
+    recognition.lang = "en-US";
+
     setIsListening(true);
     recognition.start();
 
@@ -31,7 +37,10 @@ function QuoteInput({ addQuote }) {
   };
 
   const handleAdd = () => {
-    if (!text.trim() || !selectedCategory) return;
+    if (!text.trim()) {
+      alert("Enter something first");
+      return;
+    }
 
     addQuote(text, selectedCategory);
     setText("");
@@ -60,6 +69,10 @@ function QuoteInput({ addQuote }) {
     setCustomCategory("");
     setShowCategories(false);
   };
+
+  
+
+  
 
   return (
     <div className="input-box">
@@ -105,6 +118,8 @@ function QuoteInput({ addQuote }) {
       <button onClick={startListening}>
         {isListening ? "🎤 Listening..." : "🎤 Speak"}
       </button>
+
+      
 
       <button onClick={handleAdd}>Add</button>
     </div>

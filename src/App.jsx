@@ -43,8 +43,8 @@ function App() {
     const newQuote = {
       id: now,
       text,
-      category: categoryData.name,
-      color: categoryData.color,
+      category: categoryData?.name || "other",
+      color: categoryData?.color || "#ccc",
       createdAt: now,
       updatedAt: now,
       isFavorite: false, // 👈 important
@@ -98,8 +98,80 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const canvas = document.getElementById("glitter-canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    const mouse = { x: null, y: null };
+
+  
+    for (let i = 0; i < 350; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        baseX: Math.random() * canvas.width,
+        baseY: Math.random() * canvas.height,
+        density: Math.random() * 40 + 10
+      });
+    }
+
+    const mouseMoveHandler = (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    };
+
+    window.addEventListener("mousemove", mouseMoveHandler);
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p) => {
+        let dx = mouse.x - p.x;
+        let dy = mouse.y - p.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        const maxDistance = 100;
+
+        if (distance < maxDistance) {
+          let force = (maxDistance - distance) / maxDistance;
+          let directionX = dx / distance;
+          let directionY = dy / distance;
+
+          p.x -= directionX * force * p.density * 0.5;
+          p.y -= directionY * force * p.density * 0.5;
+        } else {
+          p.x += (p.baseX - p.x) * 0.02;
+          p.y += (p.baseY - p.y) * 0.02;
+        }
+
+
+        ctx.fillStyle = `rgba(254, 254, 49, 0.9)`;
+        ctx.shadowColor = "gold";
+        ctx.shadowBlur = 15;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    return () => {
+      window.removeEventListener("mousemove", mouseMoveHandler);
+    };
+  }, []);
+
   return (
     <div className={darkMode ? "app dark" : "app"}>
+      <canvas id="glitter-canvas"></canvas>
       <div className="top-nav">
         <button onClick={() => setIsProfileOpen(!isProfileOpen)}>
           👤

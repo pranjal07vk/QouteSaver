@@ -50,10 +50,13 @@ function QuoteItem({ quote, deleteQuote, editQuote, toggleFavorite, darkMode }) 
                 : "0 4px 10px rgba(0,0,0,0.1)"
         }}
     >
-
-      <div className="top-bar">
+      <div className="card-header">
         <button onClick={() => toggleFavorite(quote.id)}>
-            {quote.isFavorite ? "⭐" : "☆"}
+          {quote.isFavorite ? "⭐" : "☆"}
+        </button>
+
+        <button onClick={handleCopy}>
+          {copied ? "✅" : "📋"}
         </button>
       </div>
 
@@ -67,21 +70,18 @@ function QuoteItem({ quote, deleteQuote, editQuote, toggleFavorite, darkMode }) 
         </>
       ) : (
         <>
-          <span>{quote.text}</span>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-          <button onClick={() => deleteQuote(quote.id)}>Delete</button>
-          
-          <button onClick={handleCopy}>
-            {copied ? "Copied!" : "Copy"}
-          </button>
+          <p className="quote-text">{quote.text}</p>
+          <div className="card-actions">
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+            <button onClick={() => deleteQuote(quote.id)}>Delete</button>
+          </div>
         </>
       )}
 
-      <small>{quote.category}</small>
-
-      <small>
-        Created: {formatDate(quote.updatedAt)}
-      </small>
+      <div className="card-meta">
+        <span className="category">{quote.category}</span>
+        <span className="date">{formatDate(quote.updatedAt)}</span>
+      </div>
     </div>
   );
 }
